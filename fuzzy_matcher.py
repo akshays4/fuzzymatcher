@@ -14,16 +14,14 @@ def read_names_from_csv(file_path):
 # Function to perform fuzzy matching
 def fuzzy_match(names, threshold=80):
     matches = []
-    
-    for name in names:
-        # Find matches for each name in the list
-        for other_name in names:
-            if name != other_name:  # Skip matching the name with itself
-                similarity = fuzz.ratio(name, other_name)
-                if similarity >= threshold:
-                    matches.append([name, other_name, similarity])
-    
+    n = len(names)
+    for i in range(n):
+        for j in range(i+1, n):  # Compare each pair only once
+            similarity = fuzz.ratio(names[i], names[j])
+            if similarity >= threshold:
+                matches.append([names[i], names[j], similarity])
     return matches
+
 
 # Main function
 def main():
